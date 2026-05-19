@@ -1,0 +1,36 @@
+### 1. Repository URL
+https://github.com/thinkbridge-thinkschool/thinkschool-refactor-godmethod-controller-Avishkar.git
+
+---
+
+### 2. Initial Prompt to AI
+
+Write a deliberately-bad OrderController.cs for an ASP.NET Core 10 Web API. 
+Make it ~300 lines long. 
+It should have one giant POST /api/orders action that mixes business logic, Entity Framework Core data access, validation, and HTTP shape inline. 
+It must contain four empty catch { } blocks that swallow exceptions. 
+It should make synchronous EF calls inside an async action. 
+It should return raw object types instead of typed responses (e.g. returning an anonymous type directly or using `object`). 
+Do not include any tests. 
+Make sure there are a couple of subtle bugs like an off-by-one error and a potential null dereference.
+
+---
+
+### 3. Original AI-Generated OrderController.cs
+
+https://github.com/thinkbridge-thinkschool/thinkschool-refactor-godmethod-controller-Avishkar/blob/main/LegacyOrderApi/Controllers/OrderController.cs
+
+
+### 4. REFACTOR_NOTES.md
+
+https://github.com/thinkbridge-thinkschool/thinkschool-refactor-godmethod-controller-Avishkar/blob/main/REFACTOR_NOTES.md
+
+
+### 5.CI / Tests Green Proof
+
+GitHub Actions:
+
+https://github.com/thinkbridge-thinkschool/thinkschool-refactor-godmethod-controller-Avishkar/actions/runs/26077884963
+
+https://github.com/thinkbridge-thinkschool/thinkschool-refactor-godmethod-controller-Avishkar/actions/runs/26077850656
+

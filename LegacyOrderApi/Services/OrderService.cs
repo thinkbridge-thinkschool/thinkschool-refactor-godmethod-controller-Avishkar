@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LegacyOrderApi.DTOs;
 using LegacyOrderApi.Models;
 using LegacyOrderApi.Repositories;
+using LegacyOrderApi.Services.Discounts;
 
 namespace LegacyOrderApi.Services
 {
@@ -17,10 +18,12 @@ namespace LegacyOrderApi.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
+        private readonly IEnumerable<IDiscountStrategy> _discountStrategies;
 
-        public OrderService(IOrderRepository repository)
+        public OrderService(IOrderRepository repository, IEnumerable<IDiscountStrategy> discountStrategies)
         {
             _repository = repository;
+            _discountStrategies = discountStrategies;
         }
 
         public async Task<OrderResponse> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken = default)
@@ -89,8 +92,12 @@ namespace LegacyOrderApi.Services
                 return new OrderResponse { Success = false, Status = "No valid items to order." };
             }
 
-            // Smell 10 fix: Apply discount policy (could be abstracted further, but better than inline controller)
-            totalAmount = ApplyDiscount(totalAmount);
+            // Smell 10 fix: Apply discount policy via Strategy Pattern
+            var applicableStrategy = _discountStrategies.FirstOrDefault(s => s.IsApplicable(totalAmount));
+            if (applicableStrategy != null)
+            {
+                totalAmount = applicableStrategy.ApplyDiscount(totalAmount);
+            }
 
             // Smell 11 fix: Prevent negative balance
             if (user.AccountBalance < totalAmount)
@@ -123,17 +130,6 @@ namespace LegacyOrderApi.Services
             };
         }
 
-        private decimal ApplyDiscount(decimal totalAmount)
-        {
-            if (totalAmount > 1000)
-            {
-                return totalAmount * 0.9m; // 10% discount
-            }
-            if (totalAmount > 500)
-            {
-                return totalAmount * 0.95m; // 5% discount
-            }
-            return totalAmount;
-        }
+
     }
 }

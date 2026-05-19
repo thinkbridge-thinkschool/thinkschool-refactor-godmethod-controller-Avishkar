@@ -1,6 +1,7 @@
 using LegacyOrderApi.Models;
 using LegacyOrderApi.Repositories;
 using LegacyOrderApi.Services;
+using LegacyOrderApi.Services.Discounts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register layers via DI
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IDiscountStrategy, HighValueDiscountStrategy>();
+builder.Services.AddScoped<IDiscountStrategy, MidValueDiscountStrategy>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();

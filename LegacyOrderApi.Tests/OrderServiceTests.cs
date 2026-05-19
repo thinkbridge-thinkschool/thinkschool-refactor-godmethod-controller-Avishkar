@@ -6,6 +6,7 @@ using LegacyOrderApi.DTOs;
 using LegacyOrderApi.Models;
 using LegacyOrderApi.Repositories;
 using LegacyOrderApi.Services;
+using LegacyOrderApi.Services.Discounts;
 using Moq;
 using Xunit;
 
@@ -19,7 +20,12 @@ namespace LegacyOrderApi.Tests
         public OrderServiceTests()
         {
             _mockRepo = new Mock<IOrderRepository>();
-            _service = new OrderService(_mockRepo.Object);
+            var discountStrategies = new List<IDiscountStrategy>
+            {
+                new HighValueDiscountStrategy(),
+                new MidValueDiscountStrategy()
+            };
+            _service = new OrderService(_mockRepo.Object, discountStrategies);
         }
 
         [Fact]
