@@ -61,6 +61,11 @@ namespace LegacyOrderApi.Services
             {
                 if (productDictionary.TryGetValue(itemReq.ProductId, out var product))
                 {
+                    if (itemReq.Quantity <= 0)
+                    {
+                        return new OrderResponse { Success = false, Status = $"Invalid quantity for product {product.Name}." };
+                    }
+
                     if (product.StockQuantity >= itemReq.Quantity)
                     {
                         totalAmount += product.Price * itemReq.Quantity;
@@ -99,8 +104,8 @@ namespace LegacyOrderApi.Services
                 totalAmount = applicableStrategy.ApplyDiscount(totalAmount);
             }
 
-            // Smell 11 fix: Prevent negative balance
-            if (user.AccountBalance < totalAmount)
+            // Smell 11 fix: Prevent negative balance (and zero balance if order costs money)
+            if (user.AccountBalance < totalAmount || (user.AccountBalance == 0 && totalAmount > 0))
             {
                 return new OrderResponse { Success = false, Status = "Insufficient funds." };
             }

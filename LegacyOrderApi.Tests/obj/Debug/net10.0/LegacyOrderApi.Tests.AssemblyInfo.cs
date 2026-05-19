@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LegacyOrderApi.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5498206f6da3b90a7665e278ca3bd1d59381aba3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bc84372c85ad8407177d253a659b9161792311d")]
 [assembly: System.Reflection.AssemblyProductAttribute("LegacyOrderApi.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LegacyOrderApi.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
