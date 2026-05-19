@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LegacyOrderApi.Tests/LegacyOrderApi.Tests.csproj" />
+  <Project Path="LegacyOrderApi/LegacyOrderApi.csproj" />
+</Solution>
